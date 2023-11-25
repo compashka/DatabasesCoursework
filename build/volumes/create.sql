@@ -111,6 +111,6 @@ create type roles AS enum (
 create table if not exists users
 (
    username VARCHAR(20) primary key,
-   password VARCHAR(20) not null,
+   password VARCHAR(100) not null,
    role roles not null
 );

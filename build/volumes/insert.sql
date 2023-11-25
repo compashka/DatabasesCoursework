@@ -38,5 +38,3 @@ VALUES (1001, 1, 'Пальники', 'ТТ3', 'Трансформатор_Т1', 
 
 INSERT INTO workers (first_name, last_name) VALUES ('Алексей', 'Иванов'), ('Екатерина', 'Смирнова');
 
-INSERT INTO users (username, password, role) VALUES ('dispatcher1', 'dispatcher1', 'DISPATCHER'), ('worker1', 'worker1', 'WORKER');
-
