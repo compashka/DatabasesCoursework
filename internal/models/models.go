@@ -108,7 +108,7 @@ const (
 )
 
 type User struct {
-	Username string `json:"username"`
+	Username string `gorm:"primaryKey" json:"username"`
 	Password string `json:"password"`
 	Role     Role   `json:"role"`
 }

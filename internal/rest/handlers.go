@@ -256,10 +256,17 @@ func (h *handler) GetRequestsByWorkerUsername(c *gin.Context) {
 //Create request
 
 func (h *handler) CreateRequest(c *gin.Context) {
-	transformerId := c.PostForm("transformer_factory_number")
-	transformerIdInt, _ := strconv.Atoi(transformerId)
+	var obj struct {
+		WorkerUsername           string `json:"worker_username"`
+		TransformerFactoryNumber int    `json:"transformer_factory_number"`
+	}
+	if err := c.ShouldBind(&obj); err != nil {
+		c.JSON(400, err)
+		return
+	}
+
 	var transformer = models.Transformer{
-		FactoryNumber: transformerIdInt,
+		FactoryNumber: obj.TransformerFactoryNumber,
 	}
 	result := h.db.First(&transformer)
 	if result.Error != nil {
@@ -267,9 +274,8 @@ func (h *handler) CreateRequest(c *gin.Context) {
 		return
 	}
 
-	workerUsername := c.PostForm("worker_username")
 	var user = models.User{
-		Username: workerUsername,
+		Username: obj.WorkerUsername,
 	}
 	result = h.db.First(&user)
 	if result.Error != nil {
@@ -297,20 +303,26 @@ func (h *handler) CreateRequest(c *gin.Context) {
 //Update request (close it)
 
 func (h *handler) UpdateRequest(c *gin.Context) {
-	transformerId := c.PostForm("transformer_factory_number")
-	transformerIdInt, _ := strconv.Atoi(transformerId)
-	var transformer = models.Transformer{
-		FactoryNumber: transformerIdInt,
+	var obj struct {
+		WorkerUsername           string `json:"worker_username"`
+		TransformerFactoryNumber int    `json:"transformer_factory_number"`
 	}
-	result := h.db.First(&models.Transformer{FactoryNumber: transformerIdInt})
+	if err := c.ShouldBind(&obj); err != nil {
+		c.JSON(400, err)
+		return
+	}
+
+	var transformer = models.Transformer{
+		FactoryNumber: obj.TransformerFactoryNumber,
+	}
+	result := h.db.First(&transformer)
 	if result.Error != nil {
 		c.JSON(400, result.Error.Error())
 		return
 	}
 
-	workerUsername := c.PostForm("worker_username")
 	var user = models.User{
-		Username: workerUsername,
+		Username: obj.WorkerUsername,
 	}
 	result = h.db.First(&user)
 	if result.Error != nil {
