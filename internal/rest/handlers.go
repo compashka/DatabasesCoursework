@@ -192,20 +192,6 @@ func (h *handler) GetTransformerByPK(c *gin.Context) {
 	c.JSON(200, obj)
 }
 
-func (h *handler) GetWorkerByPK(c *gin.Context) {
-	pk := c.Param("pk")
-	pkInt, _ := strconv.Atoi(pk)
-	var obj = models.Worker{
-		ID: pkInt,
-	}
-	result := h.db.First(&obj)
-	if result.Error != nil {
-		c.JSON(400, result.Error.Error())
-		return
-	}
-	c.JSON(200, obj)
-}
-
 func (h *handler) GetRequestByPK(c *gin.Context) {
 	pk := c.Param("pk")
 	pkInt, _ := strconv.Atoi(pk)
@@ -254,12 +240,12 @@ func (h *handler) GetAllRequests(c *gin.Context) {
 	c.JSON(200, requests)
 }
 
-//Get requests by worker_id
+//Get requests by worker_username
 
-func (h *handler) GetRequestsByWorkerId(c *gin.Context) {
+func (h *handler) GetRequestsByWorkerUsername(c *gin.Context) {
 	var requests []models.Request
-	workerId := c.Param("workerId")
-	result := h.db.Where("worker_id = ?", workerId).Find(&requests)
+	workerUsername := c.Param("workerUsername")
+	result := h.db.Where("worker_username = ?", workerUsername).Find(&requests)
 	if result.Error != nil {
 		c.JSON(400, result.Error.Error())
 		return
@@ -281,12 +267,11 @@ func (h *handler) CreateRequest(c *gin.Context) {
 		return
 	}
 
-	workerId := c.PostForm("worker_id")
-	workerIdInt, _ := strconv.Atoi(workerId)
-	var worker = models.Worker{
-		ID: workerIdInt,
+	workerUsername := c.PostForm("worker_username")
+	var user = models.User{
+		Username: workerUsername,
 	}
-	result = h.db.First(&worker)
+	result = h.db.First(&user)
 	if result.Error != nil {
 		c.JSON(400, result.Error.Error())
 		return
@@ -294,13 +279,13 @@ func (h *handler) CreateRequest(c *gin.Context) {
 
 	request := models.Request{
 		TransformerFactoryNumber: transformer.FactoryNumber,
-		WorkerID:                 worker.ID,
+		WorkerUsername:           user.Username,
 		IsCompleted:              false,
 		DateOpened:               time.Now(),
 	}
 
 	h.db.Model(&transformer).Association("TransformerFactoryNumber").Append(&request)
-	h.db.Model(&worker).Association("WorkerID").Append(&request)
+	h.db.Model(&user).Association("WorkerUsername").Append(&request)
 	result = h.db.Create(&request)
 	if result.Error != nil {
 		c.JSON(400, result.Error.Error())
@@ -323,12 +308,11 @@ func (h *handler) UpdateRequest(c *gin.Context) {
 		return
 	}
 
-	workerId := c.PostForm("worker_id")
-	workerIdInt, _ := strconv.Atoi(workerId)
-	var worker = models.Worker{
-		ID: workerIdInt,
+	workerUsername := c.PostForm("worker_username")
+	var user = models.User{
+		Username: workerUsername,
 	}
-	result = h.db.First(&worker)
+	result = h.db.First(&user)
 	if result.Error != nil {
 		c.JSON(400, result.Error.Error())
 		return
@@ -336,14 +320,14 @@ func (h *handler) UpdateRequest(c *gin.Context) {
 
 	request := models.Request{
 		TransformerFactoryNumber: transformer.FactoryNumber,
-		WorkerID:                 worker.ID,
+		WorkerUsername:           user.Username,
 	}
 	h.db.First(&request)
 	request.IsCompleted = true
 	request.DateClosed = time.Now()
 
 	h.db.Model(&transformer).Association("TransformerFactoryNumber").Append(&request)
-	h.db.Model(&worker).Association("WorkerID").Append(&request)
+	h.db.Model(&user).Association("WorkerUsername").Append(&request)
 	result = h.db.Save(&request)
 	if result.Error != nil {
 		c.JSON(400, result.Error.Error())

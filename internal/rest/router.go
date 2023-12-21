@@ -43,7 +43,6 @@ func InitRoutes(routerGroup *gin.RouterGroup, db *gorm.DB) {
 	routerGroup.GET("/typeOfTransformer/:pk",
 		h.GetTypeOfTransformerByPK)
 	routerGroup.GET("/transformer/:pk", h.GetTransformerByPK)
-	routerGroup.GET("/worker/:pk", h.GetWorkerByPK)
 	routerGroup.GET("/request/:pk", h.GetRequestByPK)
 
 	//Get transformers by location of substation
@@ -52,8 +51,8 @@ func InitRoutes(routerGroup *gin.RouterGroup, db *gorm.DB) {
 	//Get all requests
 	routerGroup.GET("/requests", h.GetAllRequests)
 
-	//Get requests by worker_id
-	routerGroup.GET("/requests/:workerId", h.GetRequestsByWorkerId)
+	//Get requests by worker_username
+	routerGroup.GET("/requests/:workerUsername", h.GetRequestsByWorkerUsername)
 
 	//Create request
 	routerGroup.POST("/createRequest", Dispatcher(auth), h.CreateRequest)

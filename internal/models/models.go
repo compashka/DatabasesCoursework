@@ -91,16 +91,10 @@ type Transformer struct {
 	TireSection                 string    `json:"tire_section"`
 }
 
-type Worker struct {
-	ID        int    `gorm:"primaryKey" json:"id"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-}
-
 type Request struct {
 	ID                       int       `gorm:"primaryKey" json:"id"`
 	TransformerFactoryNumber int       `gorm:"references:Transformer" json:"transformer_factory_number"`
-	WorkerID                 int       `gorm:"references:Worker" json:"worker_id"`
+	WorkerUsername           string    `gorm:"references:User" json:"worker_username"`
 	IsCompleted              bool      `json:"is_completed"`
 	DateOpened               time.Time `json:"date_opened"`
 	DateClosed               time.Time `json:"date_closed"`

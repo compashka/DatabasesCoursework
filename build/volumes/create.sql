@@ -87,30 +87,23 @@ create table if not exists transformers
     range_of_high_voltage_equipment serial references Range_of_high_voltage_equipments,
     tire_section                    varchar(20) references Tire_sections
 );
-create table if not exists workers
-(
-    id         serial primary key,
-    first_name varchar(20) not null,
-    last_name  varchar(20) not null
-
-);
-create table if not exists requests
-(
-    id                         serial primary key,
-    transformer_factory_number integer references Transformers,
-    worker_id                  serial references Workers,
-    is_completed               boolean default false,
-    date_opened                date,
-    date_closed                date
-
-);
 create type roles AS enum (
     'WORKER',
     'DISPATCHER'
 );
 create table if not exists users
 (
-   username VARCHAR(20) primary key,
-   password VARCHAR(100) not null,
-   role roles not null
+    username VARCHAR(20) primary key,
+    password VARCHAR(100) not null,
+    role roles not null
+);
+create table if not exists requests
+(
+    id                         serial primary key,
+    transformer_factory_number integer references Transformers,
+    worker_username            VARCHAR(20) references Users,
+    is_completed               boolean default false,
+    date_opened                date,
+    date_closed                date
+
 );
