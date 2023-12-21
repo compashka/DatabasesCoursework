@@ -282,6 +282,10 @@ func (h *handler) CreateRequest(c *gin.Context) {
 		c.JSON(400, result.Error.Error())
 		return
 	}
+	if user.Role != models.RoleWorker {
+		c.JSON(400, "Only worker's username could be passed")
+		return
+	}
 
 	request := models.Request{
 		TransformerFactoryNumber: transformer.FactoryNumber,
@@ -327,6 +331,10 @@ func (h *handler) UpdateRequest(c *gin.Context) {
 	result = h.db.First(&user)
 	if result.Error != nil {
 		c.JSON(400, result.Error.Error())
+		return
+	}
+	if user.Role != models.RoleWorker {
+		c.JSON(400, "Only worker's username could be passed")
 		return
 	}
 
