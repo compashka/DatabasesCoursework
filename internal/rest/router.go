@@ -45,6 +45,12 @@ func InitRoutes(routerGroup *gin.RouterGroup, db *gorm.DB) {
 	routerGroup.GET("/transformer/:pk", h.GetTransformerByPK)
 	routerGroup.GET("/request/:pk", h.GetRequestByPK)
 
+	//Get all users workers
+	routerGroup.GET("/workers", Dispatcher(auth), h.GetAllUsersWorkers)
+
+	//Get all locations
+	routerGroup.GET("/locations", h.GetAllLocations)
+
 	//Get transformers by location of substation
 	routerGroup.GET("/transformers/:location", h.GetTransformersByLocation)
 

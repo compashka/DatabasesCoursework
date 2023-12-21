@@ -207,6 +207,31 @@ func (h *handler) GetRequestByPK(c *gin.Context) {
 	c.JSON(200, obj)
 }
 
+//Get all users workers
+
+func (h *handler) GetAllUsersWorkers(c *gin.Context) {
+	role := models.RoleWorker
+	var users []models.User
+	result := h.db.Where("role = ?", role).Find(&users)
+	if result.Error != nil {
+		c.JSON(400, result.Error.Error())
+		return
+	}
+	c.JSON(200, users)
+}
+
+//Get all unique location
+
+func (h *handler) GetAllLocations(c *gin.Context) {
+	var locations []string
+	result := h.db.Model(&models.Substation{}).Select("DISTINCT location").Find(&locations)
+	if result.Error != nil {
+		c.JSON(400, result.Error.Error())
+		return
+	}
+	c.JSON(200, locations)
+}
+
 //Get transformers by location of substation
 
 func (h *handler) GetTransformersByLocation(c *gin.Context) {
