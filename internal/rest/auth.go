@@ -24,7 +24,7 @@ func (h *handler) NewAuth() (jwt.Auth, error) {
 				return nil, jwt.ErrorAuthenticationFailed
 			}
 
-			if CheckPasswordHash(user.Password, req.Password) {
+			if CheckPasswordHash(req.Password, user.Password) {
 				return nil, jwt.ErrorAuthenticationFailed
 			}
 
