@@ -1,8 +1,8 @@
 package database
 
 import (
-	"app/internal/config"
 	"fmt"
+	"github.com/compashka/DatabasesCoursework/internal/config"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

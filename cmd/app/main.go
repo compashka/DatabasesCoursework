@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/youngpopeugene/DatabasesCoursework/internal/app"
+	"github.com/compashka/DatabasesCoursework/internal/app"
 	"log"
 )
 

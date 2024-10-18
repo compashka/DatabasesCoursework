@@ -1,9 +1,9 @@
 package app
 
 import (
-	"github.com/youngpopeugene/DatabasesCoursework/internal/config"
-	"github.com/youngpopeugene/DatabasesCoursework/internal/database"
-	"github.com/youngpopeugene/DatabasesCoursework/internal/rest"
+	"github.com/compashka/DatabasesCoursework/internal/config"
+	"github.com/compashka/DatabasesCoursework/internal/database"
+	"github.com/compashka/DatabasesCoursework/internal/rest"
 	"log"
 )
 

@@ -2,8 +2,8 @@ package rest
 
 import (
 	"database/sql"
+	"github.com/compashka/DatabasesCoursework/internal/models"
 	"github.com/gin-gonic/gin"
-	"github.com/youngpopeugene/DatabasesCoursework/internal/models"
 	"gorm.io/gorm"
 	"strconv"
 	"time"

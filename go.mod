@@ -1,4 +1,4 @@
-module github.com/youngpopeugene/DatabasesCoursework
+module github.com/compashka/DatabasesCoursework
 
 go 1.20
 
