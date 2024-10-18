@@ -1,9 +1,9 @@
 package rest
 
 import (
-	"app/internal/models"
 	"github.com/gin-gonic/gin"
 	jwt "github.com/kyfk/gin-jwt"
+	"github.com/youngpopeugene/DatabasesCoursework/internal/models"
 )
 
 func (h *handler) NewAuth() (jwt.Auth, error) {
